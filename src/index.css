@@ -1,0 +1,439 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #F5A623;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Original utilities for text outline & enhanced high-visibility outline */
+.text-stroke,
+.text-stroke-outline {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 767px) {
+  .text-stroke,
+  .text-stroke-outline {
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.text-stroke-strong {
+  -webkit-text-stroke: 3px rgba(255, 255, 255, 0.3);
+  color: transparent;
+}
+
+.text-stroke-black {
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+  color: transparent;
+}
+
+/* =========================================================================
+   ANIMATIONS: Drift, Shine Sweep, Letter Stagger, Meray Scale
+   ========================================================================= */
+
+/* 1. Slow seamless horizontal drift (~25s loop) */
+@keyframes driftLeft {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes driftRight {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-drift-left {
+  animation: driftLeft 25s linear infinite;
+}
+
+.animate-drift-right {
+  animation: driftRight 25s linear infinite;
+}
+
+/* 2. Soft shine sweep every ~5s */
+@keyframes shineSweep {
+  0% {
+    -webkit-mask-position: 150% 0;
+    mask-position: 150% 0;
+  }
+
+  100% {
+    -webkit-mask-position: -50% 0;
+    mask-position: -50% 0;
+  }
+}
+
+.outline-shine {
+  -webkit-mask-image: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.7) 40%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.7) 60%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  -webkit-mask-size: 250% 100%;
+  mask-image: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.7) 40%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.7) 60%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  mask-size: 250% 100%;
+  animation: shineSweep 5s ease-in-out infinite;
+}
+
+/* 3. Letter stagger on audience switch (30ms per letter, 400ms ease-out) */
+@keyframes letterSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-letter-slide-up {
+  animation: letterSlideUp 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* 4. Single subtle MERAY scale 0.96 -> 1 + fade on switch (no looping) */
+@keyframes meraySwitch {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.96) scaleY(1.1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) scaleY(1.1);
+  }
+}
+
+.animate-meray-switch {
+  animation: meraySwitch 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 5. First load row entrance (fade in + 20px slide up) */
+@keyframes rowFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-row-fade-in {
+  animation: rowFadeInUp 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Person image entrance animation */
+@keyframes personFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-person-fade-in-up {
+  animation: personFadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* =========================================================================
+   RESPONSIVE HERO SIZING & SHADOWS
+   ========================================================================= */
+
+@media (max-width: 767px) {
+  .hero-mobile-height {
+    min-height: max(100svh, calc(150vw + 185px));
+  }
+
+  .hero-person-img {
+    filter: drop-shadow(0 -8px 12px rgba(0, 0, 0, 0.22));
+  }
+
+  .hero-meray-title {
+    font-size: 31vw;
+  }
+}
+
+/* On short phones (height under 700px), reduce MERAY to ~27vw and adjust top pin so it fits cleanly above cap */
+@media (max-width: 767px) and (max-height: 700px) {
+  .hero-meray-title {
+    font-size: 27vw;
+  }
+
+  .hero-meray-wrapper {
+    top: calc(env(safe-area-inset-top, 0px) + 72px) !important;
+  }
+}
+
+/* Full volumetric shadow on desktop */
+@media (min-width: 768px) {
+  .hero-person-img {
+    filter: drop-shadow(0 30px 30px rgba(0, 0, 0, 0.35)) drop-shadow(0 60px 60px rgba(0, 0, 0, 0.2));
+  }
+}
+
+/* =========================================================================
+   RANDOM HERO IMAGE & TEXT TRANSITION ANIMATIONS (750-900ms)
+   ========================================================================= */
+
+@keyframes heroCircleReveal {
+  0% {
+    clip-path: circle(0% at var(--circle-x, 50%) var(--circle-y, 85%));
+  }
+  100% {
+    clip-path: circle(150% at var(--circle-x, 50%) var(--circle-y, 85%));
+  }
+}
+
+@keyframes heroDiagonalWipe {
+  0% {
+    clip-path: polygon(0 100%, 0 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes heroSlideBlurOut {
+  0% {
+    transform: translateY(0);
+    filter: blur(0px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(40px);
+    filter: blur(8px);
+    opacity: 0;
+  }
+}
+
+@keyframes heroSlideBlurIn {
+  0% {
+    transform: translateY(40px);
+    filter: blur(8px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes heroZoomOut {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 0;
+  }
+}
+
+@keyframes heroZoomIn {
+  0% {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes heroCenterSplit {
+  0% {
+    clip-path: inset(0 50% 0 50%);
+  }
+  100% {
+    clip-path: inset(0 0% 0 0%);
+  }
+}
+
+@keyframes heroCurtain {
+  0% {
+    clip-path: inset(0 0 100% 0);
+  }
+  100% {
+    clip-path: inset(0 0 0% 0);
+  }
+}
+
+/* Meray text effects */
+@keyframes merayRise {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.animate-meray-rise {
+  animation: merayRise 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes merayFlip {
+  from {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+.animate-meray-flip {
+  animation: merayFlip 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes merayBlur {
+  from {
+    letter-spacing: 0.25em;
+    filter: blur(12px);
+    opacity: 0;
+  }
+  to {
+    letter-spacing: normal;
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+.animate-meray-blur {
+  animation: merayBlur 550ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes meraySplitLeft {
+  from {
+    transform: translateX(35px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.animate-meray-split-left {
+  animation: meraySplitLeft 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes meraySplitRight {
+  from {
+    transform: translateX(-35px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.animate-meray-split-right {
+  animation: meraySplitRight 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes meraySplitCenter {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-meray-split-center {
+  animation: meraySplitCenter 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Description / Title / Price quick fade up */
+@keyframes heroFadeUp {
+  0% {
+    transform: translateY(12px);
+    filter: blur(4px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+.animate-hero-fade-up {
+  animation: heroFadeUp 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Circular progress ring for selector dot */
+.progress-ring-circle {
+  transition: stroke-dashoffset 100ms linear;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* =========================================================================
+   REDUCED MOTION ACCESSIBILITY
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+
+  .animate-drift-left,
+  .animate-drift-right,
+  .outline-shine,
+  .animate-letter-slide-up,
+  .animate-row-fade-in,
+  .animate-meray-switch,
+  .animate-meray-rise,
+  .animate-meray-flip,
+  .animate-meray-blur,
+  .animate-meray-split-left,
+  .animate-meray-split-right,
+  .animate-meray-split-center,
+  .animate-hero-fade-up,
+  .animate-person-fade-in-up {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+}
