@@ -1,4 +1,4 @@
-# Z-ONE - React & Tailwind Landing Page
+# Meray Hair Salon - React & Tailwind Landing Page
 
 This is a modern React conversion of the Z-ONE landing page website, maintaining 100% of the original visual UI, layout, typography, animations, color palette, and interactive product variants.
 
